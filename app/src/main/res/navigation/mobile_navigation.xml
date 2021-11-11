@@ -21,5 +21,14 @@
         android:id="@+id/nav_slideshow"
         android:name="org.fiap.lhabitat.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_slideshow" >
+        <action
+            android:id="@+id/action_nav_slideshow_to_prueba"
+            app:destination="@id/prueba" />
+    </fragment>
+    <fragment
+        android:id="@+id/prueba"
+        android:name="org.fiap.lhabitat.prueba"
+        android:label="fragment_prueba"
+        tools:layout="@layout/fragment_prueba" />
 </navigation>
