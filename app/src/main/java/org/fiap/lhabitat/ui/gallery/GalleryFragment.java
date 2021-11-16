@@ -14,6 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,9 +40,13 @@ public class GalleryFragment extends Fragment {
     public static final String EXTRA_INFO = "default";
     private ImageView captureBtn;
     private ImageView picture;
-
     private static final int REQUEST_PERMISSION_CAMERA = 100;
     private static final int REQUEST_IMAGE_CAMERA = 101;
+
+    private AutoCompleteTextView status, city, estrato, parking;
+    private EditText neighbor, price;
+    private Button btnRegister;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +75,30 @@ public class GalleryFragment extends Fragment {
                 }
             }
         });
+
+        status = root.findViewById(R.id.status);
+        String[] statusOption = {"Nuevo", "Usado"};
+        ArrayAdapter statusAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, statusOption);
+        status.setText(statusAdapter.getItem(0).toString(), false);
+        status.setAdapter(statusAdapter);
+
+        city = root.findViewById(R.id.city);
+        String[] cityOption = {"Barranquilla", "Bogotá", "Cali", "Cartagena", "Medellín", "San Andrés"};
+        ArrayAdapter cityAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, cityOption);
+        city.setText(cityAdapter.getItem(0).toString(), false);
+        city.setAdapter(cityAdapter);
+
+        estrato = root.findViewById(R.id.estrato);
+        String[] estratoOption = {"1", "2", "3", "4", "5", "6"};
+        ArrayAdapter estratoAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, estratoOption);
+        estrato.setText(estratoAdapter.getItem(0).toString(), false);
+        estrato.setAdapter(estratoAdapter);
+
+        parking = root.findViewById(R.id.parking);
+        String[] parkingOption = {"1", "2", "3", "4", "5"};
+        ArrayAdapter parkingAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, parkingOption);
+        parking.setText(parkingAdapter.getItem(0).toString(), false);
+        parking.setAdapter(parkingAdapter);
 
 
         final TextView textView = binding.title;
