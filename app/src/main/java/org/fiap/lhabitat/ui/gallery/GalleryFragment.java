@@ -44,8 +44,10 @@ public class GalleryFragment extends Fragment {
     private static final int REQUEST_IMAGE_CAMERA = 101;
 
     private AutoCompleteTextView status, city, estrato, parking;
-    private EditText neighbor, price;
-    private Button btnRegister;
+    EditText neighborhood, price;
+    Button btnRegister;
+    private View view;
+    private Bundle savedInstanceState;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -108,10 +110,21 @@ public class GalleryFragment extends Fragment {
                 textView.setText(s);
             }
         });
-
-
-
         return root;
+    }
+
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        btnRegister = view.findViewById(R.id.btnRegister);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Information Sent to Database", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
@@ -154,6 +167,5 @@ public class GalleryFragment extends Fragment {
             startActivityForResult(cameraIntent, REQUEST_IMAGE_CAMERA);
         }
     }
-
 
 }
