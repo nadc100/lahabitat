@@ -29,6 +29,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentGalleryBinding;
 
@@ -49,9 +52,14 @@ public class GalleryFragment extends Fragment {
     private View view;
     private Bundle savedInstanceState;
 
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        DatabaseReference Property = database.getReference();
+        Property.setValue("Segunda Prueba");
+
         galleryViewModel =
                 new ViewModelProvider(this).get(GalleryViewModel.class);
 
