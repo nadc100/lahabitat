@@ -35,9 +35,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentGalleryBinding;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class GalleryFragment extends Fragment {
 
     private GalleryViewModel galleryViewModel;
@@ -52,20 +49,16 @@ public class GalleryFragment extends Fragment {
     private AutoCompleteTextView status, city, estrato, parking;
     EditText neighborhood, price;
     Button btnRegister;
+    private View view;
+    private Bundle savedInstanceState;
 
-    DatabaseReference Property;
-
-
-//    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-//        DatabaseReference Property = database.getReference("Property");
-//        Property.setValue("Segunda Prueba");
-
-        Property = FirebaseDatabase.getInstance().getReference();
-
+        DatabaseReference Property = database.getReference();
+        Property.setValue("Segunda Prueba");
 
         galleryViewModel =
                 new ViewModelProvider(this).get(GalleryViewModel.class);
@@ -118,41 +111,6 @@ public class GalleryFragment extends Fragment {
         parking.setAdapter(parkingAdapter);
 
 
-
-
-
-        neighborhood = root.findViewById(R.id.editTextNeighborhood);
-        price = root.findViewById(R.id.editTextprice);
-        btnRegister = root.findViewById(R.id.btnRegister);
-
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String statusItem = status.getText().toString();
-                String cityItem = city.getText().toString();
-                String neighborhoodItem = neighborhood.getText().toString();
-                String priceItem = price.getText().toString();
-                String estratoItem = estrato.getText().toString();
-                String parkingItem = parking.getText().toString();
-
-                Map<String, Object> propertyData = new HashMap<>();
-                propertyData.put("estado", statusItem);
-                propertyData.put("ciudad", cityItem);
-                propertyData.put("barrio", neighborhoodItem);
-                propertyData.put("precio", priceItem);
-                propertyData.put("estrato", estratoItem);
-                propertyData.put("parqueaderos", parkingItem);
-
-                Property.child("Property").push().setValue(propertyData);
-
-                Toast.makeText(getActivity(), "Information Sent to Database", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-
-
         final TextView textView = binding.title;
         galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -163,12 +121,19 @@ public class GalleryFragment extends Fragment {
         return root;
     }
 
-//    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//
-//
-//
-//    }
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        btnRegister = view.findViewById(R.id.btnRegister);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Information Sent to Database", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
     @Override
     public void onDestroyView() {
