@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -29,8 +30,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentGalleryBinding;
@@ -45,9 +50,12 @@ public class GalleryFragment extends Fragment {
 
     public static final String EXTRA_INFO = "default";
     private ImageView captureBtn;
+    private ImageView uploadBtn;
     private ImageView picture;
+    private StorageReference mStorage;
     private static final int REQUEST_PERMISSION_CAMERA = 100;
     private static final int REQUEST_IMAGE_CAMERA = 101;
+    private static final int GALLERY_INTENT = 1;
 
     private AutoCompleteTextView status, city, estrato, parking;
     EditText neighborhood, price;
@@ -65,6 +73,7 @@ public class GalleryFragment extends Fragment {
 //        Property.setValue("Segunda Prueba");
 
         Property = FirebaseDatabase.getInstance().getReference();
+        mStorage = FirebaseStorage.getInstance().getReference();
 
 
         galleryViewModel =
@@ -75,6 +84,7 @@ public class GalleryFragment extends Fragment {
 
         captureBtn = root.findViewById(R.id.capture_button);
         picture = root.findViewById(R.id.picture);
+        uploadBtn = root.findViewById(R.id.image_button);
 
 
         captureBtn.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +102,18 @@ public class GalleryFragment extends Fragment {
                 }
             }
         });
+
+
+        uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent, GALLERY_INTENT);
+            }
+        });
+
+
 
         status = root.findViewById(R.id.status);
         String[] statusOption = {"Nuevo", "Usado"};
@@ -116,10 +138,6 @@ public class GalleryFragment extends Fragment {
         ArrayAdapter parkingAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, parkingOption);
         parking.setText(parkingAdapter.getItem(0).toString(), false);
         parking.setAdapter(parkingAdapter);
-
-
-
-
 
         neighborhood = root.findViewById(R.id.editTextNeighborhood);
         price = root.findViewById(R.id.editTextprice);
@@ -200,6 +218,28 @@ public class GalleryFragment extends Fragment {
                 Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
             }
         }
+
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            StorageReference filePath = mStorage.child("images").child(uri.getLastPathSegment());
+            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(getActivity(), "image uploaded", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+
+
+
+
+
+
+
+
+
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
