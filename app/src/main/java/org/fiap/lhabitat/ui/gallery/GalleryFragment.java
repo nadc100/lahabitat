@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -30,16 +31,22 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentGalleryBinding;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,19 +59,21 @@ public class GalleryFragment extends Fragment {
     private ImageView captureBtn;
     private ImageView uploadBtn;
     private ImageView picture;
-    private StorageReference mStorage;
+
     private static final int REQUEST_PERMISSION_CAMERA = 100;
     private static final int REQUEST_IMAGE_CAMERA = 101;
-    private static final int GALLERY_INTENT = 1;
+    private static final int GALLERY_INTENT = 111;
 
     private AutoCompleteTextView status, city, estrato, parking;
     EditText neighborhood, price;
     Button btnRegister;
 
+    StorageReference mStorage, ref;
     DatabaseReference Property;
+    Uri filePath;
+    String downloadUrl;
+    ProgressDialog progressDialog;
 
-
-//    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -72,8 +81,12 @@ public class GalleryFragment extends Fragment {
 //        DatabaseReference Property = database.getReference("Property");
 //        Property.setValue("Segunda Prueba");
 
-        Property = FirebaseDatabase.getInstance().getReference();
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        myRef = database.getReference("property");
+
+        Property = FirebaseDatabase.getInstance().getReference("Image");
         mStorage = FirebaseStorage.getInstance().getReference();
+        progressDialog = new ProgressDialog(getActivity());
 
 
         galleryViewModel =
@@ -84,7 +97,7 @@ public class GalleryFragment extends Fragment {
 
         captureBtn = root.findViewById(R.id.capture_button);
         picture = root.findViewById(R.id.picture);
-        uploadBtn = root.findViewById(R.id.image_button);
+
 
 
         captureBtn.setOnClickListener(new View.OnClickListener() {
@@ -104,15 +117,25 @@ public class GalleryFragment extends Fragment {
         });
 
 
+//        uploadBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//                galleryIntent.setType("*/*");
+//                startActivityForResult(galleryIntent, GALLERY_INTENT);
+//            }
+//        });
+
+        uploadBtn = root.findViewById(R.id.image_button);
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, GALLERY_INTENT);
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent();
+                galleryIntent.setType("image/");
+                galleryIntent.setAction(Intent.ACTION_PICK);
+                startActivityForResult(Intent.createChooser(galleryIntent, "Select image"), GALLERY_INTENT);
             }
         });
-
 
 
         status = root.findViewById(R.id.status);
@@ -134,7 +157,7 @@ public class GalleryFragment extends Fragment {
         estrato.setAdapter(estratoAdapter);
 
         parking = root.findViewById(R.id.parking);
-        String[] parkingOption = {"1", "2", "3", "4", "5"};
+        String[] parkingOption = {"0", "1", "2", "3", "4", "5"};
         ArrayAdapter parkingAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, parkingOption);
         parking.setText(parkingAdapter.getItem(0).toString(), false);
         parking.setAdapter(parkingAdapter);
@@ -146,6 +169,8 @@ public class GalleryFragment extends Fragment {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
 
                 String statusItem = status.getText().toString();
                 String cityItem = city.getText().toString();
@@ -162,6 +187,7 @@ public class GalleryFragment extends Fragment {
                 propertyData.put("estrato", estratoItem);
                 propertyData.put("parqueaderos", parkingItem);
 
+                uploadImage();
                 Property.child("Property").push().setValue(propertyData);
 
                 Toast.makeText(getActivity(), "Information Sent to Database", Toast.LENGTH_SHORT).show();
@@ -180,6 +206,12 @@ public class GalleryFragment extends Fragment {
         });
         return root;
     }
+
+//    private void fileUpload() {
+//        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//        galleryIntent.setType("*/*");
+//        startActivityForResult(galleryIntent, GALLERY_INTENT);
+//    }
 
 //    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 //        super.onViewCreated(view, savedInstanceState);
@@ -208,7 +240,7 @@ public class GalleryFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAMERA){
             if (resultCode == RESULT_OK){
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
@@ -219,29 +251,38 @@ public class GalleryFragment extends Fragment {
             }
         }
 
-        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
-            Uri uri = data.getData();
-            StorageReference filePath = mStorage.child("images").child(uri.getLastPathSegment());
-            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getActivity(), "image uploaded", Toast.LENGTH_SHORT).show();
-                }
-            });
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try{
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                picture.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+
+//            Uri FileUri = data.getData();
+//
+//            StorageReference filePath = FirebaseStorage.getInstance().getReference().child("property");
+//            final StorageReference fileName = filePath.child("Pictures" + FileUri.getLastPathSegment());
+
+//            fileName.putFile(FileUri).addOnSuccessListener(taskSnapshot -> fileName.getDownloadUrl().addOnSuccessListener(uri -> {
+//               HashMap <String, String> hashMap = new HashMap<>();
+//               hashMap.put("link", String.valueOf(uri));
+//               myRef.setValue(hashMap);
+//            }));
+
+//                    new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Toast.makeText(getActivity(), "image uploaded", Toast.LENGTH_SHORT).show();
+//                }
+//            };
         }
-
-
-
-
-
-
-
-
-
-
-        super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     public void goToCamera(){
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -249,6 +290,40 @@ public class GalleryFragment extends Fragment {
         if (cameraIntent.resolveActivity(getActivity().getPackageManager() )!=null){
             startActivityForResult(cameraIntent, REQUEST_IMAGE_CAMERA);
         }
+    }
+
+    public void uploadImage(){
+        if(filePath != null){
+            progressDialog.show();
+            ref = FirebaseStorage.getInstance().getReference().child("Images");
+            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    mStorage.child("Images").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            downloadUrl = task.getResult().toString();
+                            Property.push().child("imageUrl").setValue(downloadUrl);
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Image uploaded", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(), "Upload Failed", Toast.LENGTH_LONG).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double pr = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage("Uploading " + (int)pr + "%");
+                }
+            });
+        } else
+            Toast.makeText(getActivity(), "Image not found", Toast.LENGTH_LONG).show();
     }
 
 }
