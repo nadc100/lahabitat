@@ -26,8 +26,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -73,6 +75,7 @@ public class GalleryFragment extends Fragment {
     Uri filePath;
     String downloadUrl;
     ProgressDialog progressDialog;
+    CardView galleryFragmentCardView;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -165,12 +168,11 @@ public class GalleryFragment extends Fragment {
         neighborhood = root.findViewById(R.id.editTextNeighborhood);
         price = root.findViewById(R.id.editTextprice);
         btnRegister = root.findViewById(R.id.btnRegister);
+        galleryFragmentCardView = root.findViewById(R.id.card_information);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
 
                 String statusItem = status.getText().toString();
                 String cityItem = city.getText().toString();
@@ -191,6 +193,13 @@ public class GalleryFragment extends Fragment {
                 Property.child("Property").push().setValue(propertyData);
 
                 Toast.makeText(getActivity(), "Information Sent to Database", Toast.LENGTH_SHORT).show();
+
+
+                goingToPropertyFragment();
+
+
+                galleryFragmentCardView.setVisibility(View.GONE);
+
             }
         });
 
@@ -324,6 +333,25 @@ public class GalleryFragment extends Fragment {
             });
         } else
             Toast.makeText(getActivity(), "Image not found", Toast.LENGTH_LONG).show();
+    }
+
+    public void goingToPropertyFragment() {
+
+
+        Fragment propertyFragment = new PropertyFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.gallery_frame, propertyFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+
+//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//        transaction.setReorderingAllowed(true);
+//
+//        transaction.replace(R.id.propertyFrame, new PropertyFragment());
+//        transaction.commit();
+//        Toast.makeText(getActivity(), "Going to Property Fragment", Toast.LENGTH_SHORT).show();
     }
 
 }
