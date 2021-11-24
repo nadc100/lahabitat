@@ -142,25 +142,25 @@ public class GalleryFragment extends Fragment {
 
 
         status = root.findViewById(R.id.status);
-        String[] statusOption = {"Nuevo", "Usado"};
+        String[] statusOption = {"","Nuevo", "Usado"};
         ArrayAdapter statusAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, statusOption);
         status.setText(statusAdapter.getItem(0).toString(), false);
         status.setAdapter(statusAdapter);
 
         city = root.findViewById(R.id.city);
-        String[] cityOption = {"Barranquilla", "Bogotá", "Cali", "Cartagena", "Medellín", "San Andrés"};
+        String[] cityOption = {"", "Barranquilla", "Bogotá", "Cali", "Cartagena", "Medellín", "San Andrés"};
         ArrayAdapter cityAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, cityOption);
         city.setText(cityAdapter.getItem(0).toString(), false);
         city.setAdapter(cityAdapter);
 
         estrato = root.findViewById(R.id.estrato);
-        String[] estratoOption = {"1", "2", "3", "4", "5", "6"};
+        String[] estratoOption = {"","1", "2", "3", "4", "5", "6"};
         ArrayAdapter estratoAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, estratoOption);
         estrato.setText(estratoAdapter.getItem(0).toString(), false);
         estrato.setAdapter(estratoAdapter);
 
         parking = root.findViewById(R.id.parking);
-        String[] parkingOption = {"0", "1", "2", "3", "4", "5"};
+        String[] parkingOption = {"","0", "1", "2", "3", "4", "5"};
         ArrayAdapter parkingAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, parkingOption);
         parking.setText(parkingAdapter.getItem(0).toString(), false);
         parking.setAdapter(parkingAdapter);
