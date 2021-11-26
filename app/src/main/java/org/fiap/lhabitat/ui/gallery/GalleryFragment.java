@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -33,14 +35,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -49,8 +47,6 @@ import org.fiap.lhabitat.databinding.FragmentGalleryBinding;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GalleryFragment extends Fragment {
 
@@ -81,16 +77,9 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-//        DatabaseReference Property = database.getReference("Property");
-//        Property.setValue("Segunda Prueba");
-
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        myRef = database.getReference("property");
-
-        Property = FirebaseDatabase.getInstance().getReference("Image");
-        mStorage = FirebaseStorage.getInstance().getReference();
+        Property = FirebaseDatabase.getInstance().getReference("property");
+        mStorage = FirebaseStorage.getInstance().getReference("property");
         progressDialog = new ProgressDialog(getActivity());
-
 
         galleryViewModel =
                 new ViewModelProvider(this).get(GalleryViewModel.class);
@@ -100,8 +89,6 @@ public class GalleryFragment extends Fragment {
 
         captureBtn = root.findViewById(R.id.capture_button);
         picture = root.findViewById(R.id.picture);
-
-
 
         captureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,16 +106,6 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-
-//        uploadBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//                galleryIntent.setType("*/*");
-//                startActivityForResult(galleryIntent, GALLERY_INTENT);
-//            }
-//        });
-
         uploadBtn = root.findViewById(R.id.image_button);
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +116,6 @@ public class GalleryFragment extends Fragment {
                 startActivityForResult(Intent.createChooser(galleryIntent, "Select image"), GALLERY_INTENT);
             }
         });
-
 
         status = root.findViewById(R.id.status);
         String[] statusOption = {"","Nuevo", "Usado"};
@@ -174,37 +150,13 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String statusItem = status.getText().toString();
-                String cityItem = city.getText().toString();
-                String neighborhoodItem = neighborhood.getText().toString();
-                String priceItem = price.getText().toString();
-                String estratoItem = estrato.getText().toString();
-                String parkingItem = parking.getText().toString();
-
-                Map<String, Object> propertyData = new HashMap<>();
-                propertyData.put("estado", statusItem);
-                propertyData.put("ciudad", cityItem);
-                propertyData.put("barrio", neighborhoodItem);
-                propertyData.put("precio", priceItem);
-                propertyData.put("estrato", estratoItem);
-                propertyData.put("parqueaderos", parkingItem);
-
                 uploadImage();
-                Property.child("Property").push().setValue(propertyData);
-
                 Toast.makeText(getActivity(), "Information Sent to Database", Toast.LENGTH_SHORT).show();
-
-
                 goingToPropertyFragment();
-
-
                 galleryFragmentCardView.setVisibility(View.GONE);
 
             }
         });
-
-
-
 
         final TextView textView = binding.title;
         galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -215,19 +167,6 @@ public class GalleryFragment extends Fragment {
         });
         return root;
     }
-
-//    private void fileUpload() {
-//        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//        galleryIntent.setType("*/*");
-//        startActivityForResult(galleryIntent, GALLERY_INTENT);
-//    }
-
-//    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//
-//
-//
-//    }
 
     @Override
     public void onDestroyView() {
@@ -271,27 +210,16 @@ public class GalleryFragment extends Fragment {
                 e.printStackTrace();
             }
 
-
-//            Uri FileUri = data.getData();
-//
-//            StorageReference filePath = FirebaseStorage.getInstance().getReference().child("property");
-//            final StorageReference fileName = filePath.child("Pictures" + FileUri.getLastPathSegment());
-
-//            fileName.putFile(FileUri).addOnSuccessListener(taskSnapshot -> fileName.getDownloadUrl().addOnSuccessListener(uri -> {
-//               HashMap <String, String> hashMap = new HashMap<>();
-//               hashMap.put("link", String.valueOf(uri));
-//               myRef.setValue(hashMap);
-//            }));
-
-//                    new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Toast.makeText(getActivity(), "image uploaded", Toast.LENGTH_SHORT).show();
-//                }
-//            };
         }
     }
 
+    public String GetFileExtension(Uri uri) {
+
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
+
+    }
 
     public void goToCamera(){
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -301,57 +229,52 @@ public class GalleryFragment extends Fragment {
         }
     }
 
-    public void uploadImage(){
-        if(filePath != null){
+    public void uploadImage() {
+
+        if (filePath != null) {
+
+            progressDialog.setTitle("Image is Uploading...");
             progressDialog.show();
-            ref = FirebaseStorage.getInstance().getReference().child("Images");
-            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    mStorage.child("Images").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+
+            StorageReference storageReference2 = mStorage.child(System.currentTimeMillis() + "." + GetFileExtension(filePath));
+            storageReference2.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            downloadUrl = task.getResult().toString();
-                            Property.push().child("imageUrl").setValue(downloadUrl);
-                            progressDialog.dismiss();
-                            Toast.makeText(getActivity(), "Image uploaded", Toast.LENGTH_LONG).show();
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            storageReference2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String tempStatus = status.getText().toString().trim();
+                                    String tempCity = city.getText().toString().trim();
+                                    String tempNeighborhood = neighborhood.getText().toString().trim();
+                                    String tempPrice = price.getText().toString().trim();
+                                    String tempEstrato = estrato.getText().toString().trim();
+                                    String tempParking = parking.getText().toString().trim();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getActivity().getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                                    @SuppressWarnings("VisibleForTests")
+                                    PropertyModel imageUploadInfo = new PropertyModel(tempStatus, tempCity, tempNeighborhood, tempPrice, tempEstrato, tempParking, uri.toString());
+                                    String ImageUploadId = Property.push().getKey();
+                                    Property.child(ImageUploadId).setValue(imageUploadInfo);
+
+
+                                    Toast.makeText(getActivity(), "Uploaded Succesfully", Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
                     });
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Upload Failed", Toast.LENGTH_LONG).show();
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double pr = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                    progressDialog.setMessage("Uploading " + (int)pr + "%");
-                }
-            });
-        } else
-            Toast.makeText(getActivity(), "Image not found", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(getActivity(), "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void goingToPropertyFragment() {
-
-
         Fragment propertyFragment = new PropertyFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.gallery_frame, propertyFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
-
-//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        transaction.setReorderingAllowed(true);
-//
-//        transaction.replace(R.id.propertyFrame, new PropertyFragment());
-//        transaction.commit();
-//        Toast.makeText(getActivity(), "Going to Property Fragment", Toast.LENGTH_SHORT).show();
     }
 
 }
