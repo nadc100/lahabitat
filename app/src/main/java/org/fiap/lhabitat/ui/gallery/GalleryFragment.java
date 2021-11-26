@@ -37,10 +37,6 @@ public class GalleryFragment extends Fragment {
         return root;
     }
 
-    private void init(){
-
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
