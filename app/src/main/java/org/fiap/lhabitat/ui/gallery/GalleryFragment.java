@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentGalleryBinding;
 
 public class GalleryFragment extends Fragment {
@@ -36,6 +35,10 @@ public class GalleryFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    private void init(){
+
     }
 
     @Override
