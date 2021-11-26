@@ -1,6 +1,8 @@
 package org.fiap.lhabitat.ui.gallery;
 
-public class PropertyModel {
+import java.io.Serializable;
+
+public class PropertyModel implements Serializable {
     private String status;
     private String city;
     private String neighborhood;

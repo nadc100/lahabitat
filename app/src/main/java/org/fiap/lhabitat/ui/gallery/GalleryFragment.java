@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +34,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -45,6 +45,7 @@ import com.google.firebase.storage.UploadTask;
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentGalleryBinding;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -149,7 +150,6 @@ public class GalleryFragment extends Fragment {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 uploadImage();
                 Toast.makeText(getActivity(), "Information Sent to Database", Toast.LENGTH_SHORT).show();
                 goingToPropertyFragment();
@@ -191,9 +191,11 @@ public class GalleryFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAMERA){
             if (resultCode == RESULT_OK){
-                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                picture.setImageBitmap(bitmap);
-                Log.i("TAG", "Result =>" + bitmap);
+                onCaptureImageResult(data);
+
+//                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//                picture.setImageBitmap(bitmap);
+//                Log.i("TAG", "Result =>" + bitmap);
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
             }
@@ -211,6 +213,30 @@ public class GalleryFragment extends Fragment {
             }
 
         }
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        byte bb[] = bytes.toByteArray();
+        picture.setImageBitmap(thumbnail);
+//        uploadToFirebase(bb);
+    }
+
+    private void uploadToFirebase(byte[] bb) {
+        StorageReference sr = mStorage.child("images");
+        sr.putBytes(bb).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getActivity(), "Successfully Upload", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "" + "Failed To Upload", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public String GetFileExtension(Uri uri) {
