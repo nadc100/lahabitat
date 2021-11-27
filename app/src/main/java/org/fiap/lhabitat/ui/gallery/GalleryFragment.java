@@ -63,7 +63,7 @@ public class GalleryFragment extends Fragment {
     private static final int REQUEST_IMAGE_CAMERA = 101;
     private static final int GALLERY_INTENT = 111;
 
-    private AutoCompleteTextView status, city, estrato, parking;
+    private AutoCompleteTextView status, city, estrato, room, parking;
     EditText neighborhood, price;
     Button btnRegister;
 
@@ -135,6 +135,12 @@ public class GalleryFragment extends Fragment {
         ArrayAdapter estratoAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, estratoOption);
         estrato.setText(estratoAdapter.getItem(0).toString(), false);
         estrato.setAdapter(estratoAdapter);
+
+        room = root.findViewById(R.id.rooms);
+        String[] roomsOption = {"","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        ArrayAdapter roomAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, roomsOption);
+        room.setText(roomAdapter.getItem(0).toString(), false);
+        room.setAdapter(roomAdapter);
 
         parking = root.findViewById(R.id.parking);
         String[] parkingOption = {"","0", "1", "2", "3", "4", "5"};
@@ -272,14 +278,15 @@ public class GalleryFragment extends Fragment {
                                 public void onSuccess(Uri uri) {
                                     String tempStatus = status.getText().toString().trim();
                                     String tempCity = city.getText().toString().trim();
+                                    String tempEstrato = estrato.getText().toString().trim();
                                     String tempNeighborhood = neighborhood.getText().toString().trim();
                                     String tempPrice = price.getText().toString().trim();
-                                    String tempEstrato = estrato.getText().toString().trim();
+                                    String tempRoom = room.getText().toString().trim();
                                     String tempParking = parking.getText().toString().trim();
                                     progressDialog.dismiss();
                                     Toast.makeText(getActivity().getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                                     @SuppressWarnings("VisibleForTests")
-                                    PropertyModel imageUploadInfo = new PropertyModel(tempStatus, tempCity, tempNeighborhood, tempPrice, tempEstrato, tempParking, uri.toString());
+                                    PropertyModel imageUploadInfo = new PropertyModel(tempStatus, tempCity, tempEstrato, tempNeighborhood, tempPrice, tempRoom, tempParking, uri.toString());
                                     String ImageUploadId = Property.push().getKey();
                                     Property.child(ImageUploadId).setValue(imageUploadInfo);
 
