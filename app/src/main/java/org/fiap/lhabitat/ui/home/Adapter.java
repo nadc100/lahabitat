@@ -3,19 +3,25 @@ package org.fiap.lhabitat.ui.home;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import org.fiap.lhabitat.R;
 
 import java.util.List;
 
 
-public class Adapter extends RecyclerView.Adapter<Adapter.PropiedadesviewHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.PropiedadesviewHolder> implements View.OnClickListener {
 
     List<Propiedad> propiedades;
+
+    private View.OnClickListener listener;
+
 
 
     public Adapter(List<Propiedad> propiedades) {
@@ -27,6 +33,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PropiedadesviewHolder>
     public PropiedadesviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_recycler,parent, false);
         PropiedadesviewHolder holder = new PropiedadesviewHolder(v);
+        v.setOnClickListener(this);
         return holder;
     }
 
@@ -37,17 +44,32 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PropiedadesviewHolder>
         holder.textViewCiudad.setText(propiedad.getCity());
         holder.textViewHabitacion.setText(propiedad.getEstrato());
         holder.textViewBano.setText(propiedad.getParking());
-        holder.textViewImagen.setText(propiedad.getImagen());
+        //holder.textViewImagen.setText(propiedad.getImagen());
+        Glide.with(holder.imageViewImagen.getContext()).load(propiedad.getImagenURL()).into(holder.imageViewImagen);
     }
+
+
 
     @Override
     public int getItemCount() {
         return propiedades.size();
     }
 
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (listener != null){
+            listener.onClick(v);
+        }
+    }
+
 
     public static class PropiedadesviewHolder extends RecyclerView.ViewHolder{
-        TextView textViewPrecio, textViewCiudad, textViewHabitacion, textViewBano, textViewImagen;
+        TextView textViewPrecio, textViewCiudad, textViewHabitacion, textViewBano;
+        ImageView imageViewImagen;
 
         public PropiedadesviewHolder(View itemView){
             super(itemView);
@@ -55,7 +77,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PropiedadesviewHolder>
             textViewCiudad = (TextView) itemView.findViewById(R.id.textViewciudad);
             textViewHabitacion = (TextView) itemView.findViewById(R.id.textViewest);
             textViewBano = (TextView) itemView.findViewById(R.id.textViewparking);
-            textViewImagen = (TextView) itemView.findViewById(R.id.textViewimagen);
+            imageViewImagen = (ImageView) itemView.findViewById(R.id.imageViewimagen);
 
         }
 

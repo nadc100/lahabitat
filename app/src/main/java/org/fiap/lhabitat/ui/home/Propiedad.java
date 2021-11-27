@@ -5,18 +5,18 @@ public class Propiedad {
     String city;
     String estrato;
     String parking;
-    String imagen;
+    String imagenURL;
 
     public Propiedad(){
 
     }
 
-    public Propiedad(String price, String city, String estrato, String parking, String imagen){
+    public Propiedad(String price, String city, String estrato, String parking, String url){
         this.price = price;
         this.city = city;
         this.estrato = estrato;
         this.parking = parking;
-        this.imagen = imagen;
+        this.imagenURL = url;
     }
 
     public String getPrice() {
@@ -51,12 +51,12 @@ public class Propiedad {
         this.parking = parking;
     }
 
-    public String getImagen() {
-        return imagen;
+    public String getImagenURL() {
+        return imagenURL;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setImagenURL(String imagenURL) {
+        this.imagenURL = imagenURL;
     }
 
 
