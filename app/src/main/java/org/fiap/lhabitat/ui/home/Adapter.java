@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import org.fiap.lhabitat.R;
 
 import java.util.List;
@@ -43,6 +45,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PropiedadesviewHolder>
         holder.textViewHabitacion.setText(propiedad.getEstrato());
         holder.textViewBano.setText(propiedad.getParking());
         //holder.textViewImagen.setText(propiedad.getImagen());
+        Glide.with(holder.imageViewImagen.getContext()).load(propiedad.getImagenURL()).into(holder.imageViewImagen);
     }
 
 
