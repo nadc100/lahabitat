@@ -5,23 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textViewimagen"
+    <ImageView
+        android:id="@+id/imageViewimagen"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginBottom="15dp"
-        android:text="IMAGEN"
         android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textIsSelectable="false"
-        android:textSize="34sp"
-        android:textStyle="italic" />
+        app:srcCompat="@drawable/ic_home_ofiice" />
 
     <ImageView
         android:id="@+id/imageViewprecio"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_below="@id/textViewimagen"
+        android:layout_below="@id/imageViewimagen"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
         app:srcCompat="@drawable/ic_price" />
@@ -30,7 +26,7 @@
         android:id="@+id/textViewprecio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewimagen"
+        android:layout_below="@id/imageViewimagen"
         android:layout_toEndOf="@id/imageViewprecio"
         android:text="PRECIO"
         android:textSize="20sp"
@@ -40,7 +36,7 @@
         android:id="@+id/imageViewciudad"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_below="@id/textViewimagen"
+        android:layout_below="@id/imageViewimagen"
         android:layout_centerHorizontal="true"
         android:layout_marginRight="15dp"
         app:srcCompat="@drawable/mapa" />
@@ -49,7 +45,7 @@
         android:id="@+id/textViewciudad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewimagen"
+        android:layout_below="@id/imageViewimagen"
         android:layout_toEndOf="@id/imageViewciudad"
         android:text="CIUDAD"
         android:textSize="20sp"

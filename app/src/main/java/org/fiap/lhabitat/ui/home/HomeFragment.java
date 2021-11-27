@@ -15,6 +15,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentHomeBinding;
 
@@ -56,24 +62,15 @@ public class HomeFragment extends Fragment {
         rv = (RecyclerView) vista.findViewById(R.id.recyclerId);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        llenarpropiedades();
+        //llenarpropiedades();
 
         Adapter adapter = new Adapter(propiedades);
         rv.setAdapter(adapter);
 
 
-        return vista;
-
-    }
-
-    private void llenarpropiedades(){
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        propiedades.add(new Propiedad("1500","Bogota","5","4","Imagen 1"));
-        propiedades.add(new Propiedad("2500","Cali","5","4","Imagen 2"));
-        propiedades.add(new Propiedad("3500","Villavicencio","5","4","Imagen 3"));
-        propiedades.add(new Propiedad("4500","Medellin","5","4","Imagen 4"));
-
-       /* database.getReference().getRoot().child("property").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseStorage mStorage = FirebaseStorage.getInstance();
+        database.getReference().getRoot().child("property").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 propiedades.removeAll(propiedades);
@@ -89,8 +86,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        */
+        return vista;
 
+    }
+
+    private void llenarpropiedades(){
+
+        //propiedades.add(new Propiedad("1500","Bogota","5","4","Imagen 1"));
+        //propiedades.add(new Propiedad("2500","Cali","5","4","Imagen 2"));
+        //propiedades.add(new Propiedad("3500","Villavicencio","5","4","Imagen 3"));
+        //propiedades.add(new Propiedad("4500","Medellin","5","4","Imagen 4"));
 
     }
 
