@@ -36,7 +36,7 @@ public class SlideshowFragment extends Fragment {
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(root.getContext(), "HOLA MUNDO", Toast.LENGTH_SHORT).show();
+                Toast.makeText(root.getContext(), "Tu información ha sido enviada, un asesor se contactara contigo en breve", Toast.LENGTH_SHORT).show();
             }
         });
 
