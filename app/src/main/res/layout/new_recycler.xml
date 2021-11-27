@@ -24,7 +24,7 @@
         android:layout_below="@id/textViewimagen"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
-        app:srcCompat="@drawable/pesos" />
+        app:srcCompat="@drawable/ic_price" />
 
     <TextView
         android:id="@+id/textViewprecio"
@@ -62,7 +62,7 @@
         android:layout_below="@id/imageViewprecio"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="20dp"
-        app:srcCompat="@drawable/casa" />
+        app:srcCompat="@drawable/ic_estrato" />
 
     <TextView
         android:id="@+id/textViewest"
@@ -81,7 +81,7 @@
         android:layout_below="@id/imageViewprecio"
         android:layout_centerHorizontal="true"
         android:layout_marginRight="15dp"
-        app:srcCompat="@drawable/carro" />
+        app:srcCompat="@drawable/ic_parking" />
 
     <TextView
         android:id="@+id/textViewparking"
