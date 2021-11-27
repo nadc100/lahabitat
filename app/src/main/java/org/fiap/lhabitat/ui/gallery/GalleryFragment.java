@@ -137,7 +137,7 @@ public class GalleryFragment extends Fragment {
         estrato.setAdapter(estratoAdapter);
 
         room = root.findViewById(R.id.rooms);
-        String[] roomsOption = {"","1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        String[] roomsOption = {"","1", "2", "3", "4", "5", "6", "7", "8", "9"};
         ArrayAdapter roomAdapter = new ArrayAdapter(getActivity(), R.layout.dropdown_item, roomsOption);
         room.setText(roomAdapter.getItem(0).toString(), false);
         room.setAdapter(roomAdapter);
