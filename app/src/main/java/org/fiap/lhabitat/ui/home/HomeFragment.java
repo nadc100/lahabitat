@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,7 +63,6 @@ public class HomeFragment extends Fragment {
         rv = (RecyclerView) vista.findViewById(R.id.recyclerId);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //llenarpropiedades();
 
         Adapter adapter = new Adapter(propiedades);
         rv.setAdapter(adapter);
@@ -86,18 +86,17 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Selección: "+propiedades.get(rv.getChildAdapterPosition(v)).getPrice(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return vista;
 
     }
 
-    private void llenarpropiedades(){
-
-        //propiedades.add(new Propiedad("1500","Bogota","5","4","Imagen 1"));
-        //propiedades.add(new Propiedad("2500","Cali","5","4","Imagen 2"));
-        //propiedades.add(new Propiedad("3500","Villavicencio","5","4","Imagen 3"));
-        //propiedades.add(new Propiedad("4500","Medellin","5","4","Imagen 4"));
-
-    }
 
     @Override
     public void onDestroyView() {
