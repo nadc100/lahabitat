@@ -18,6 +18,7 @@ import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentDetailsBinding;
 import org.fiap.lhabitat.databinding.FragmentHomeBinding;
 import org.fiap.lhabitat.ui.gallery.PropertyFragment;
+import org.fiap.lhabitat.ui.gallery.PropertyModel;
 import org.fiap.lhabitat.ui.home.HomeFragment;
 import org.fiap.lhabitat.ui.home.Propiedad;
 
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class DetailsFragment extends Fragment {
     private FragmentDetailsBinding binding;
-    List<Propiedad> propiedad;
+    List<PropertyModel> propiedad;
     String status, city,  estrato, neighborhood, price, room, parking, imageUrl;
     FloatingActionButton fab_goback;
 
@@ -52,7 +53,7 @@ public class DetailsFragment extends Fragment {
         View view = binding.getRoot();
         Bundle bundle = this.getArguments();
         if(bundle!= null);{
-            propiedad = (List<Propiedad>) bundle.getSerializable("PROPIEDAD");
+            propiedad = (List<PropertyModel>) bundle.getSerializable("PROPIEDAD");
         }
         fab_goback = view.findViewById(R.id.fab_goback);
 
@@ -66,13 +67,13 @@ public class DetailsFragment extends Fragment {
         TextView detailsParking = view.findViewById(R.id.details_parking);
         Glide.with(getContext()).load(imageUrl).into(detailsImage);
 
-        detailsStatus.setText(status);
+        detailsStatus.setText(propiedad.get(0).getStatus());
         detailsCity.setText(propiedad.get(0).getCity());
         detailsEstrato.setText(propiedad.get(0).getEstrato());
-        detailsNeighborhood.setText(neighborhood);
+        detailsNeighborhood.setText(propiedad.get(0).getNeighborhood());
         detailsPrice.setText(propiedad.get(0).getPrice());
-        detailsRooms.setText(room);
-        detailsParking.setText(parking);
+        detailsRooms.setText(propiedad.get(0).getRoom());
+        detailsParking.setText(propiedad.get(0).getParking());
 
         fab_goback.setOnClickListener(new View.OnClickListener() {
             @Override

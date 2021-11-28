@@ -12,19 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import org.fiap.lhabitat.R;
+import org.fiap.lhabitat.ui.gallery.PropertyModel;
 
 import java.util.List;
 
 
 public class Adapter extends RecyclerView.Adapter<Adapter.PropiedadesviewHolder> implements View.OnClickListener {
 
-    List<Propiedad> propiedades;
+    List<PropertyModel> propiedades;
 
     private View.OnClickListener listener;
 
 
 
-    public Adapter(List<Propiedad> propiedades) {
+    public Adapter(List<PropertyModel> propiedades) {
         this.propiedades = propiedades;
     }
 
@@ -39,13 +40,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PropiedadesviewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull PropiedadesviewHolder holder, int position) {
-        Propiedad propiedad = propiedades.get(position);
+        PropertyModel propiedad = propiedades.get(position);
         holder.textViewPrecio.setText(propiedad.getPrice());
         holder.textViewCiudad.setText(propiedad.getCity());
         holder.textViewHabitacion.setText(propiedad.getEstrato());
         holder.textViewBano.setText(propiedad.getParking());
         //holder.textViewImagen.setText(propiedad.getImagen());
-        Glide.with(holder.imageViewImagen.getContext()).load(propiedad.getImagenURL()).into(holder.imageViewImagen);
+        Glide.with(holder.imageViewImagen.getContext()).load(propiedad.getImageURL()).into(holder.imageViewImagen);
     }
 
 

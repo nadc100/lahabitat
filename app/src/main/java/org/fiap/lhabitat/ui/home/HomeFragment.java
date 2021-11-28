@@ -25,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentHomeBinding;
 import org.fiap.lhabitat.ui.details.DetailsFragment;
+import org.fiap.lhabitat.ui.gallery.PropertyModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,8 +36,8 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     RecyclerView rv;
-    List<Propiedad> seleccionada;
-    List<Propiedad> propiedades;
+    List<PropertyModel> seleccionada;
+    List<PropertyModel> propiedades;
 
     Adapter adapter;
 
@@ -77,7 +78,7 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 propiedades.removeAll(propiedades);
                 for (DataSnapshot ds: snapshot.getChildren()) {
-                    Propiedad propiedad = ds.getValue(Propiedad.class);
+                    PropertyModel propiedad = ds.getValue(PropertyModel.class);
                     propiedades.add(propiedad);
                 }
                 adapter.notifyDataSetChanged();
@@ -95,7 +96,7 @@ public class HomeFragment extends Fragment {
                 seleccionada = new ArrayList<>();
                 DetailsFragment fragment = new DetailsFragment();
                 Bundle bundle = new Bundle();
-                Propiedad prop = propiedades.get(rv.getChildAdapterPosition(v));
+                PropertyModel prop = propiedades.get(rv.getChildAdapterPosition(v));
                 seleccionada.add(prop);
                 bundle.putSerializable("PROPIEDAD", new ArrayList<>(seleccionada));
                 fragment.setArguments(bundle);
