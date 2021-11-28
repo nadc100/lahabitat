@@ -7,10 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.ui.gallery.PropertyFragment;
@@ -31,6 +32,7 @@ public class DetailsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     String status, city,  estrato, neighborhood, price, room, parking, imageUrl;
+    FloatingActionButton fab_goback;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -72,6 +74,7 @@ public class DetailsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -79,6 +82,8 @@ public class DetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_details, container, false);
+
+        fab_goback = view.findViewById(R.id.fab_goback);
 
         ImageView detailsImage = view.findViewById(R.id.details_image);
         TextView detailsStatus = view.findViewById(R.id.details_status);
@@ -98,13 +103,22 @@ public class DetailsFragment extends Fragment {
         detailsRooms.setText(room);
         detailsParking.setText(parking);
 
+        fab_goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goingToPropertyFragment();
+            }
+        });
+
         return view;
     }
 
-    public void onBackPressed() {
-        AppCompatActivity activity = (AppCompatActivity) getContext();
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.gallery_frame, new PropertyFragment(
-
-        )).addToBackStack(null).commit();
+    public void goingToPropertyFragment() {
+        Fragment propertyFragment = new PropertyFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.gallery_frame, propertyFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
+
 }

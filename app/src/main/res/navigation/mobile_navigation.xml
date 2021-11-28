@@ -31,4 +31,13 @@
         android:name="org.fiap.lhabitat.ui.gallery.PropertyFragment"
         android:label="fragment_property"
         tools:layout="@layout/fragment_property" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="org.fiap.lhabitat.ui.details.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_detailsFragment_to_nav_property"
+            app:destination="@id/nav_property" />
+    </fragment>
 </navigation>
