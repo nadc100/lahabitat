@@ -26,6 +26,7 @@ public class PropertyAdapter extends FirebaseRecyclerAdapter<PropertyModel, Prop
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull PropertyModel propertyModel) {
         myViewHolder.tv_property_city_list_item.setText(propertyModel.getCity());
+        myViewHolder.tv_property_status_list_item.setText(propertyModel.getStatus());
         myViewHolder.tv_property_neighborhood_list_item.setText(propertyModel.getNeighborhood());
         myViewHolder.tv_property_price_list_item.setText(propertyModel.getPrice());
         Glide.with(myViewHolder.iv_property_image_list_item.getContext()).load(propertyModel.getImageURL()).into(myViewHolder.iv_property_image_list_item);
@@ -60,6 +61,7 @@ public class PropertyAdapter extends FirebaseRecyclerAdapter<PropertyModel, Prop
 
         ImageView iv_property_image_list_item;
         TextView tv_property_city_list_item;
+        TextView tv_property_status_list_item;
         TextView tv_property_neighborhood_list_item;
         TextView tv_property_price_list_item;
         public myViewHolder(@NonNull View itemView) {
@@ -67,6 +69,7 @@ public class PropertyAdapter extends FirebaseRecyclerAdapter<PropertyModel, Prop
 
             iv_property_image_list_item = itemView.findViewById(R.id.iv_property_image_list_item);
             tv_property_city_list_item = itemView.findViewById(R.id.tv_property_city_list_item);
+            tv_property_status_list_item = itemView.findViewById(R.id.tv_property_status_list_item);
             tv_property_neighborhood_list_item = itemView.findViewById(R.id.tv_property_neighborhood_list_item);
             tv_property_price_list_item = itemView.findViewById(R.id.tv_property_price_list_item);
         }
