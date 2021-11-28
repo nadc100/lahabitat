@@ -15,11 +15,20 @@
         android:id="@+id/nav_gallery"
         android:name="org.fiap.lhabitat.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" >
+        <action
+            android:id="@+id/nav_property"
+            app:destination="@layout/fragment_property" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="org.fiap.lhabitat.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_property"
+        android:name="org.fiap.lhabitat.ui.gallery.PropertyFragment"
+        android:label="fragment_property"
+        tools:layout="@layout/fragment_property" />
 </navigation>

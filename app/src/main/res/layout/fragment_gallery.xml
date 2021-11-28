@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gallery_frame"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -35,20 +36,36 @@
         android:id="@+id/capture_button"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        android:layout_marginStart="173dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="173dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="220dp"
         android:src="@drawable/ic_menu_camera"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/picture" />
+
+    <ImageView
+        android:id="@+id/image_button"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="130dp"
+        android:src="@drawable/ic_menu_gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/picture" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="350dp"
+        android:id="@+id/card_information"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="40dp"
+        app:contentPadding="5dp"
         app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
@@ -76,7 +93,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="65dp"
             android:hint="Ciudad"
@@ -90,7 +107,25 @@
                 android:layout_weight="1"
                 android:enabled="false"
                 android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="65dp"
+            android:layout_marginStart="200dp"
+            android:hint="Estrato"
+            android:textColorHint="@color/color_un"
+            app:startIconDrawable="@drawable/ic_estrato">
+
+            <AutoCompleteTextView
+                android:id="@+id/estrato"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.cardview.widget.CardView
@@ -158,28 +193,27 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="160dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="235dp"
-            android:hint="Estrato"
+            android:hint="Habitaciones"
             android:textColorHint="@color/color_un"
-            app:startIconDrawable="@drawable/ic_estrato">
+            app:startIconDrawable="@drawable/ic_bed">
 
             <AutoCompleteTextView
-                android:id="@+id/estrato"
+                android:id="@+id/rooms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:enabled="false"
                 android:inputType="none" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="180dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="170dp"
+            android:layout_marginStart="200dp"
             android:layout_marginTop="235dp"
             android:hint="Parqueaderos"
             android:textColorHint="@color/color_un"
