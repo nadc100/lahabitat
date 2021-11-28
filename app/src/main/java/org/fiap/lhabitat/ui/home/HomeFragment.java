@@ -24,7 +24,9 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentHomeBinding;
+import org.fiap.lhabitat.ui.details.DetailsFragment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     RecyclerView rv;
-
+    List<Propiedad> seleccionada;
     List<Propiedad> propiedades;
 
     Adapter adapter;
@@ -89,6 +91,15 @@ public class HomeFragment extends Fragment {
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//              seleccionada.clear();
+                seleccionada = new ArrayList<>();
+                DetailsFragment fragment = new DetailsFragment();
+                Bundle bundle = new Bundle();
+                Propiedad prop = propiedades.get(rv.getChildAdapterPosition(v));
+                seleccionada.add(prop);
+                bundle.putSerializable("PROPIEDAD", new ArrayList<>(seleccionada));
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fr_home, fragment).commit();
                 Toast.makeText(getContext(), "Selección: "+propiedades.get(rv.getChildAdapterPosition(v)).getPrice(), Toast.LENGTH_SHORT).show();
             }
         });
