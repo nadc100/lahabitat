@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,18 +14,23 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.fiap.lhabitat.R;
-import org.fiap.lhabitat.databinding.FragmentDetailsBinding;
-import org.fiap.lhabitat.databinding.FragmentHomeBinding;
 import org.fiap.lhabitat.ui.gallery.PropertyFragment;
-import org.fiap.lhabitat.ui.gallery.PropertyModel;
-import org.fiap.lhabitat.ui.home.HomeFragment;
-import org.fiap.lhabitat.ui.home.Propiedad;
 
-import java.util.List;
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link DetailsFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class DetailsFragment extends Fragment {
-    private FragmentDetailsBinding binding;
-    List<PropertyModel> propiedad;
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
     String status, city,  estrato, neighborhood, price, room, parking, imageUrl;
     FloatingActionButton fab_goback;
 
@@ -45,16 +49,40 @@ public class DetailsFragment extends Fragment {
         this.imageUrl = imageUrl;
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment DetailsFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static DetailsFragment newInstance(String param1, String param2) {
+        DetailsFragment fragment = new DetailsFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentDetailsBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
-        Bundle bundle = this.getArguments();
-        if(bundle!= null);{
-            propiedad = (List<PropertyModel>) bundle.getSerializable("PROPIEDAD");
-        }
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
+
         fab_goback = view.findViewById(R.id.fab_goback);
 
         ImageView detailsImage = view.findViewById(R.id.details_image);
@@ -67,29 +95,30 @@ public class DetailsFragment extends Fragment {
         TextView detailsParking = view.findViewById(R.id.details_parking);
         Glide.with(getContext()).load(imageUrl).into(detailsImage);
 
-        detailsStatus.setText(propiedad.get(0).getStatus());
-        detailsCity.setText(propiedad.get(0).getCity());
-        detailsEstrato.setText(propiedad.get(0).getEstrato());
-        detailsNeighborhood.setText(propiedad.get(0).getNeighborhood());
-        detailsPrice.setText(propiedad.get(0).getPrice());
-        detailsRooms.setText(propiedad.get(0).getRoom());
-        detailsParking.setText(propiedad.get(0).getParking());
+        detailsStatus.setText(status);
+        detailsCity.setText(city);
+        detailsEstrato.setText(estrato);
+        detailsNeighborhood.setText(neighborhood);
+        detailsPrice.setText(price);
+        detailsRooms.setText(room);
+        detailsParking.setText(parking);
 
         fab_goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeFragment homeFragment = new HomeFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.details_drawer, homeFragment).commit();;
+                goingToPropertyFragment();
             }
         });
 
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void goingToPropertyFragment() {
+        Fragment propertyFragment = new PropertyFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.gallery_frame, propertyFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }
