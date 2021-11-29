@@ -40,13 +40,13 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#2ECC71" />
 
-    <EditText
-        android:id="@+id/et_mail"
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Digite su email"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:paddingLeft="10dp" />
 
     <TextView
@@ -58,8 +58,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#2ECC71" />
 
-    <EditText
-        android:id="@+id/et_pass"
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
