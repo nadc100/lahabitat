@@ -8,6 +8,22 @@
     android:background="@drawable/gradient_background"
     tools:context=".ui.details.DetailsFragment">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_goback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="339dp"
+        android:layout_marginBottom="232dp"
+        app:backgroundTint="#FBFBFB"
+        app:layout_constraintBottom_toTopOf="@+id/cardView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_going_back" />
+
     <ImageView
         android:id="@+id/details_image"
         android:layout_width="222dp"
@@ -20,6 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -29,8 +46,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/details_status_label"
@@ -38,15 +55,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Estado"
-                android:textSize="17sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/details_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
                 android:layout_marginStart="130dp"
+                android:layout_marginTop="7dp"
                 android:text="Status" />
         </RelativeLayout>
 
@@ -77,8 +94,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="70dp">
+            android:layout_marginTop="70dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/details_estrato_label"
@@ -86,8 +103,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Estrato"
-                android:textSize="17sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/details_estrato"
@@ -101,8 +118,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="100dp">
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/details_neighborhood_label"
@@ -110,23 +127,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Barrio"
-                android:textSize="17sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/details_neighborhood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
                 android:layout_marginStart="130dp"
+                android:layout_marginTop="7dp"
                 android:text="Neighborhood" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="130dp">
+            android:layout_marginTop="130dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/details_price_label"
@@ -134,26 +151,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Precio"
-                android:textSize="17sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/details_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
                 android:layout_marginStart="130dp"
+                android:layout_marginTop="13dp"
                 android:text="Price" />
 
         </RelativeLayout>
 
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="160dp">
+            android:layout_marginTop="160dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/details_rooms_label"
@@ -161,23 +177,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Habitaciones"
-                android:textSize="17sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/details_rooms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
                 android:layout_marginStart="130dp"
+                android:layout_marginTop="7dp"
                 android:text="Rooms" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="190dp">
+            android:layout_marginTop="190dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/details_parking_label"
@@ -192,22 +208,53 @@
                 android:id="@+id/details_parking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
                 android:layout_marginStart="130dp"
+                android:layout_marginTop="7dp"
                 android:text="Parking" />
         </RelativeLayout>
 
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="270dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/color_un"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2"
+            tools:layout_editor_absoluteX="-16dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_insert_new_property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="25dp"
+                app:backgroundTint="#FBFBFB"
+                app:srcCompat="@drawable/ic_home_ofiice" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_remove_property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="90dp"
+                android:layout_marginBottom="25dp"
+                app:backgroundTint="#FBFBFB"
+                app:srcCompat="@drawable/ic_remove" />
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+
     </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_goback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:backgroundTint="#FBFBFB"
-        app:srcCompat="@drawable/ic_going_back"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="659dp" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

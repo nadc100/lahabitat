@@ -14,7 +14,12 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.fiap.lhabitat.R;
+import org.fiap.lhabitat.ui.gallery.GalleryFragment;
 import org.fiap.lhabitat.ui.gallery.PropertyFragment;
+import org.fiap.lhabitat.ui.gallery.PropertyModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +36,12 @@ public class DetailsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    public static List<PropertyModel> property = new ArrayList<>();
     String status, city,  estrato, neighborhood, price, room, parking, imageUrl;
     FloatingActionButton fab_goback;
+    FloatingActionButton fab_galleryFragment;
+    FloatingActionButton fab_remove;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -84,6 +93,8 @@ public class DetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
 
         fab_goback = view.findViewById(R.id.fab_goback);
+        fab_galleryFragment = view.findViewById(R.id.fab_insert_new_property);
+        fab_remove = view.findViewById(R.id.fab_remove_property);
 
         ImageView detailsImage = view.findViewById(R.id.details_image);
         TextView detailsStatus = view.findViewById(R.id.details_status);
@@ -110,6 +121,20 @@ public class DetailsFragment extends Fragment {
             }
         });
 
+        fab_galleryFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goingToGalleryFragment();
+            }
+        });
+
+        fab_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goingToGalleryFragment();
+            }
+        });
+
         return view;
     }
 
@@ -117,6 +142,14 @@ public class DetailsFragment extends Fragment {
         Fragment propertyFragment = new PropertyFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.gallery_frame, propertyFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void goingToGalleryFragment() {
+        Fragment galleryFragment = new GalleryFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.gallery_frame, galleryFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
