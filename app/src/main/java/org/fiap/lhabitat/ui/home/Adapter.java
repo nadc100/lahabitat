@@ -7,82 +7,76 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import org.fiap.lhabitat.R;
+import org.fiap.lhabitat.ui.details.DetailsFragment;
+
 import org.fiap.lhabitat.ui.gallery.PropertyModel;
 
-import java.util.List;
+public class Adapter extends FirebaseRecyclerAdapter<PropertyModel, org.fiap.lhabitat.ui.home.Adapter.myViewHolder> {
 
+    public Adapter(@NonNull FirebaseRecyclerOptions<PropertyModel> options) {
+        super(options);
+    }
 
-public class Adapter extends RecyclerView.Adapter<Adapter.PropiedadesviewHolder> implements View.OnClickListener {
+    @Override
+    protected void onBindViewHolder(@NonNull Adapter.myViewHolder myViewHolder, int i, @NonNull PropertyModel propertyModel) {
+        myViewHolder.textViewprecio.setText(propertyModel.getPrice());
+        myViewHolder.textViewciudad.setText(propertyModel.getCity());
+        myViewHolder.textViewest.setText(propertyModel.getEstrato());
+        myViewHolder.textViewparking.setText(propertyModel.getParking());
 
-    List<PropertyModel> propiedades;
+        Glide.with(myViewHolder.imageViewimagen.getContext()).load(propertyModel.getImageURL()).into(myViewHolder.imageViewimagen);
 
-    private View.OnClickListener listener;
+        myViewHolder.imageViewimagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.gallery_frame, new DetailsFragment(
+                        propertyModel.getStatus(),
+                        propertyModel.getCity(),
+                        propertyModel.getEstrato(),
+                        propertyModel.getNeighborhood(),
+                        propertyModel.getPrice(),
+                        propertyModel.getRoom(),
+                        propertyModel.getParking(),
+                        propertyModel.getImageURL()
+                )).addToBackStack(null).commit();
 
-
-
-    public Adapter(List<PropertyModel> propiedades) {
-        this.propiedades = propiedades;
+            }
+        });
     }
 
     @NonNull
     @Override
-    public PropiedadesviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_recycler,parent, false);
-        PropiedadesviewHolder holder = new PropiedadesviewHolder(v);
-        v.setOnClickListener(this);
-        return holder;
+    public Adapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_recycler, parent,false);
+        return new Adapter.myViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull PropiedadesviewHolder holder, int position) {
-        PropertyModel propiedad = propiedades.get(position);
-        holder.textViewPrecio.setText(propiedad.getPrice());
-        holder.textViewCiudad.setText(propiedad.getCity());
-        holder.textViewHabitacion.setText(propiedad.getEstrato());
-        holder.textViewBano.setText(propiedad.getParking());
-        //holder.textViewImagen.setText(propiedad.getImagen());
-        Glide.with(holder.imageViewImagen.getContext()).load(propiedad.getImageURL()).into(holder.imageViewImagen);
-    }
+    public class myViewHolder extends RecyclerView.ViewHolder{
 
+        ImageView imageViewimagen;
+        TextView textViewprecio;
+        TextView textViewciudad;
+        TextView textViewest;
+        TextView textViewparking;
 
-
-    @Override
-    public int getItemCount() {
-        return propiedades.size();
-    }
-
-    public void setOnClickListener(View.OnClickListener listener){
-        this.listener = listener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (listener != null){
-            listener.onClick(v);
-        }
-    }
-
-
-    public static class PropiedadesviewHolder extends RecyclerView.ViewHolder{
-        TextView textViewPrecio, textViewCiudad, textViewHabitacion, textViewBano;
-        ImageView imageViewImagen;
-
-        public PropiedadesviewHolder(View itemView){
+        public myViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewPrecio = (TextView) itemView.findViewById(R.id.textViewprecio);
-            textViewCiudad = (TextView) itemView.findViewById(R.id.textViewciudad);
-            textViewHabitacion = (TextView) itemView.findViewById(R.id.textViewest);
-            textViewBano = (TextView) itemView.findViewById(R.id.textViewparking);
-            imageViewImagen = (ImageView) itemView.findViewById(R.id.imageViewimagen);
 
+            imageViewimagen = itemView.findViewById(R.id.imageViewimagen);
+            textViewprecio = itemView.findViewById(R.id.textViewprecio);
+            textViewciudad = itemView.findViewById(R.id.textViewciudad);
+            textViewest = itemView.findViewById(R.id.textViewest);
+            textViewparking = itemView.findViewById(R.id.textViewparking);
         }
-
     }
-
 
 }
