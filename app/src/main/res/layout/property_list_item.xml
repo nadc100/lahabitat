@@ -11,69 +11,78 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:padding="1dp"
+        android:background="@color/color_un">
 
-        <ImageView
-            android:id="@+id/iv_property_image_list_item"
-            android:layout_width="120dp"
-            android:layout_height="95dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_home_ofiice" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/white">
 
-        <TextView
-            android:id="@+id/tv_property_city_list_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="10dp"
-            android:text="City"
-            android:textSize="20dp"
-            android:textColor="#000"
-            />
+            <ImageView
+                android:id="@+id/iv_property_image_list_item"
+                android:layout_width="120dp"
+                android:layout_height="95dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_home_ofiice" />
 
-        <TextView
-            android:id="@+id/tv_property_status_list_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="38dp"
-            android:text="Status"
-            android:textSize="11dp"
-            android:textColor="@color/color_un"/>
+            <TextView
+                android:id="@+id/tv_property_city_list_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="10dp"
+                android:text="City"
+                android:textSize="20dp"
+                android:textColor="#000"
+                />
 
-        <TextView
-            android:id="@+id/tv_property_neighborhood_list_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="55dp"
-            android:text="Neighborhood"
-            android:textSize="15dp" />
+            <TextView
+                android:id="@+id/tv_property_status_list_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="38dp"
+                android:text="Status"
+                android:textSize="11dp"
+                android:textColor="@color/color_un"/>
 
-        <TextView
-            android:id="@+id/tv_property_symbol_list_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="80dp"
-            android:text="$"
-            android:textSize="15dp" />
+            <TextView
+                android:id="@+id/tv_property_neighborhood_list_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="55dp"
+                android:text="Neighborhood"
+                android:textSize="15dp" />
 
-        <TextView
-            android:id="@+id/tv_property_price_list_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="170dp"
-            android:layout_marginTop="80dp"
-            android:text="Price"
-            android:textSize="15dp" />
+            <TextView
+                android:id="@+id/tv_property_symbol_list_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="80dp"
+                android:text="$"
+                android:textSize="15dp" />
 
-
+            <TextView
+                android:id="@+id/tv_property_price_list_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="170dp"
+                android:layout_marginTop="80dp"
+                android:text="Price"
+                android:textSize="15dp" />
+        </RelativeLayout>
 
 
 
 
     </RelativeLayout>
+
+
+
 </androidx.cardview.widget.CardView>
