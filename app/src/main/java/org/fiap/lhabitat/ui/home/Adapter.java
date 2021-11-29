@@ -15,8 +15,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import org.fiap.lhabitat.R;
-import org.fiap.lhabitat.ui.details.DetailsFragment;
-
+import org.fiap.lhabitat.ui.details.GeneralDetailsFragment;
 import org.fiap.lhabitat.ui.gallery.PropertyModel;
 
 public class Adapter extends FirebaseRecyclerAdapter<PropertyModel, org.fiap.lhabitat.ui.home.Adapter.myViewHolder> {
@@ -38,7 +37,7 @@ public class Adapter extends FirebaseRecyclerAdapter<PropertyModel, org.fiap.lha
             @Override
             public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.gallery_frame, new DetailsFragment(
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fr_home, new GeneralDetailsFragment(
                         propertyModel.getStatus(),
                         propertyModel.getCity(),
                         propertyModel.getEstrato(),
