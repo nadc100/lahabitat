@@ -3,12 +3,13 @@ package org.fiap.lhabitat.ui.gallery;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,20 +35,22 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.databinding.FragmentGalleryBinding;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.List;
 
 public class GalleryFragment extends Fragment {
 
@@ -58,6 +61,12 @@ public class GalleryFragment extends Fragment {
     private ImageView captureBtn;
     private ImageView uploadBtn;
     private ImageView picture;
+
+    private static final int CAMERA_CODE = 200;
+    private static final int GALLERY_CODE = 100;
+
+    Uri imageUri = null;
+
 
     private static final int REQUEST_PERMISSION_CAMERA = 100;
     private static final int REQUEST_IMAGE_CAMERA = 101;
@@ -77,6 +86,8 @@ public class GalleryFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        permissions();
 
         Property = FirebaseDatabase.getInstance().getReference("property");
         mStorage = FirebaseStorage.getInstance().getReference("property");
@@ -104,6 +115,13 @@ public class GalleryFragment extends Fragment {
                 }else{
                     goToCamera();
                 }
+            }
+        });
+
+        picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeImage();
             }
         });
 
@@ -180,79 +198,117 @@ public class GalleryFragment extends Fragment {
         binding = null;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_PERMISSION_CAMERA){
-            if (permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                goToCamera();
-            }else{
-                Toast.makeText(getActivity(), "Necesitas Activar los Permisos", Toast.LENGTH_SHORT).show();
+
+    private void changeImage() {
+        String[] options = {"Camera","Gallery"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Choose an Option");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which==0) {
+                    openCamera();
+                }
+                if (which==1) {
+                    openGallery();
+                }
             }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        });
+
+        builder.create().show();
+
+    }
+
+    private void openCamera() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "Temp Pick");
+        values.put(MediaStore.Images.Media.TITLE, "Temp Desc");
+        imageUri = getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent, CAMERA_CODE);
+
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, GALLERY_CODE);
+
+    }
+
+    private void permissions() {
+        Dexter.withContext(getContext()).withPermissions(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+
+            }
+        }).check();
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAMERA){
-            if (resultCode == RESULT_OK){
-                onCaptureImageResult(data);
 
+        if(requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            String filePath = "images/" + "userprofile";
+        }
+    }
+
+    //    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        if (requestCode == REQUEST_PERMISSION_CAMERA){
+//            if (permissions.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                goToCamera();
+//            }else{
+//                Toast.makeText(getActivity(), "Necesitas Activar los Permisos", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//    }
+//
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == REQUEST_IMAGE_CAMERA){
+//            if (resultCode == RESULT_OK){
+//                onCaptureImageResult(data);
 //                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 //                picture.setImageBitmap(bitmap);
 //                Log.i("TAG", "Result =>" + bitmap);
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
-            }
-        }
-
-        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
-            try{
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                picture.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
-
-    private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        byte bb[] = bytes.toByteArray();
-        picture.setImageBitmap(thumbnail);
-//        uploadToFirebase(bb);
-    }
-
-    private void uploadToFirebase(byte[] bb) {
-        StorageReference sr = mStorage.child("images");
-        sr.putBytes(bb).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getActivity(), "Successfully Upload", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "" + "Failed To Upload", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public String GetFileExtension(Uri uri) {
-
-        ContentResolver contentResolver = getActivity().getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
-
-    }
-
+//            } else if (resultCode == Activity.RESULT_CANCELED) {
+//                Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
+//            }
+//        }
+//
+//        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            filePath = data.getData();
+//            try{
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+//                picture.setImageBitmap(bitmap);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
+//
     public void goToCamera(){
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, REQUEST_IMAGE_CAMERA);
@@ -260,7 +316,39 @@ public class GalleryFragment extends Fragment {
             startActivityForResult(cameraIntent, REQUEST_IMAGE_CAMERA);
         }
     }
+//
+//    private void onCaptureImageResult(Intent data) {
+//        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+//        byte bb[] = bytes.toByteArray();
+//        picture.setImageBitmap(thumbnail);
+////        uploadToFirebase(bb);
+//    }
+//
+////    private void uploadToFirebase(byte[] bb) {
+////        StorageReference sr = mStorage.child("images");
+////        sr.putBytes(bb).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+////            @Override
+////            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+////                Toast.makeText(getActivity(), "Successfully Upload", Toast.LENGTH_SHORT).show();
+////            }
+////        }).addOnFailureListener(new OnFailureListener() {
+////            @Override
+////            public void onFailure(@NonNull Exception e) {
+////                Toast.makeText(getActivity(), "" + "Failed To Upload", Toast.LENGTH_SHORT).show();
+////            }
+////        });
+////    }
 
+    public String GetFileExtension(Uri uri) {
+
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
+    }
+//
+//
     public void uploadImage() {
 
         if (filePath != null) {
@@ -284,11 +372,11 @@ public class GalleryFragment extends Fragment {
                                     String tempRoom = room.getText().toString().trim();
                                     String tempParking = parking.getText().toString().trim();
                                     progressDialog.dismiss();
-                                    Toast.makeText(getActivity().getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), "Propiedad guardadada satisfactoriamente ", Toast.LENGTH_LONG).show();
                                     @SuppressWarnings("VisibleForTests")
-                                    PropertyModel imageUploadInfo = new PropertyModel(tempStatus, tempCity, tempEstrato, tempNeighborhood, tempPrice, tempRoom, tempParking, uri.toString());
-                                    String ImageUploadId = Property.push().getKey();
-                                    Property.child(ImageUploadId).setValue(imageUploadInfo);
+                                    PropertyModel propertyUpload = new PropertyModel(tempStatus, tempCity, tempEstrato, tempNeighborhood, tempPrice, tempRoom, tempParking, uri.toString());
+                                    String PropertyUploadId = Property.push().getKey();
+                                    Property.child(PropertyUploadId).setValue(propertyUpload);
 
 
                                     Toast.makeText(getActivity(), "Uploaded Succesfully", Toast.LENGTH_LONG).show();
@@ -309,5 +397,7 @@ public class GalleryFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
 
 }
