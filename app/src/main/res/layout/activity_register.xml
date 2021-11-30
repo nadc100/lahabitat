@@ -15,15 +15,21 @@
         android:visibility="gone"
         tools:visibility="gone" />
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="113dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/lhabitat_logo" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="160dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:elevation="10dp"
-        >
+        android:elevation="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,20 +41,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create An Account"
+                android:text="Crea una Cuenta"
                 android:layout_gravity="center"
                 android:textSize="20sp"
                 android:layout_margin="20dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
 
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="User Name"
+                android:hint="Usuario"
                 android:inputType="textPersonName"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:id="@+id/reg_username"/>
 
 
@@ -57,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:id="@+id/reg_email"/>
 
 
@@ -66,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:id="@+id/reg_password"/>
 
 
@@ -76,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
                 android:id="@+id/register_Account_btn"
-                android:text="Register"
+                android:text="Registrar"
                 android:background="@android:color/holo_red_light"
                 android:textColor="@android:color/white"/>
 

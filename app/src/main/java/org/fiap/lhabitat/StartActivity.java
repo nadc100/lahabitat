@@ -7,9 +7,13 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class StartActivity extends AppCompatActivity {
 
     Button login, register;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,14 @@ public class StartActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
+        if(user != null) {
+            startActivity(new Intent(StartActivity.this, MainActivity.class));
+        }
+    }
 }
