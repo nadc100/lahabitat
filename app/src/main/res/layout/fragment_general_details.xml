@@ -227,22 +227,14 @@
             tools:layout_editor_absoluteX="-16dp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_insert_new_property"
+                android:id="@+id/fab_purchase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="25dp"
                 app:backgroundTint="#FBFBFB"
-                app:srcCompat="@drawable/ic_home_ofiice" />
+                app:srcCompat="@drawable/ic_purchase" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_remove_property"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="90dp"
-                android:layout_marginBottom="25dp"
-                app:backgroundTint="#FBFBFB"
-                app:srcCompat="@drawable/ic_remove" />
         </androidx.cardview.widget.CardView>
 
 

@@ -16,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.fiap.lhabitat.R;
 import org.fiap.lhabitat.ui.gallery.PropertyModel;
 import org.fiap.lhabitat.ui.home.HomeFragment;
+import org.fiap.lhabitat.ui.slideshow.SlideshowFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class GeneralDetailsFragment extends Fragment {
 
     public static List<PropertyModel> property = new ArrayList<>();
     String status, city,  estrato, neighborhood, price, room, parking, imageUrl;
-    FloatingActionButton fab_goback;
+    FloatingActionButton fab_goback, fab_purchase;
 
     public GeneralDetailsFragment() {
         // Required empty public constructor
@@ -89,6 +90,7 @@ public class GeneralDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_general_details, container, false);
 
         fab_goback = view.findViewById(R.id.general_details_fab_goback);
+        fab_purchase = view.findViewById(R.id.fab_purchase);
 
         ImageView detailsImage = view.findViewById(R.id.general_details_image);
         TextView detailsStatus = view.findViewById(R.id.general_details_status);
@@ -115,6 +117,13 @@ public class GeneralDetailsFragment extends Fragment {
             }
         });
 
+        fab_purchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goingToSlideshowFragment();
+            }
+        });
+
         return view;
 
     }
@@ -123,6 +132,14 @@ public class GeneralDetailsFragment extends Fragment {
         Fragment homeFragment = new HomeFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fr_home, homeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void goingToSlideshowFragment() {
+        Fragment slideshowFragment = new SlideshowFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fr_home, slideshowFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

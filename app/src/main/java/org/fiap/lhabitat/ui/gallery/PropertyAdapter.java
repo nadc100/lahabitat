@@ -48,6 +48,7 @@ public class PropertyAdapter extends FirebaseRecyclerAdapter<PropertyModel, Prop
 
             }
         });
+
     }
 
     @NonNull
