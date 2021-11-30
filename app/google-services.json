@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "787144258849-5m7rtdhrrp78nnii0kdtmqtec7slchp9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.fiap.lhabitat",
+            "certificate_hash": "e1f04df477c24f362cb9584b95cb394231eaca98"
+          }
+        },
+        {
           "client_id": "787144258849-8o8eq2572fsbld39qiuck6tmvdoirjdd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
