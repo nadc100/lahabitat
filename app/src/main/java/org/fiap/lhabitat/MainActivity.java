@@ -87,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
 
             mAuth.signOut();
             finish();
+            Intent i = new Intent(this, LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -97,4 +100,6 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         finishAffinity();
     }
+
 }
+

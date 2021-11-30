@@ -20,7 +20,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 public class LoginActivity extends AppCompatActivity {
 
     MaterialEditText et_email, et_password;
-    Button loginBtn, goBack;
+    Button loginBtn, goBack,btn_register,btn_google;
     String email, password;
     FirebaseAuth mAuth;
 
@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         et_email = findViewById(R.id.et_email);
         et_password = findViewById(R.id.et_password);
         loginBtn = findViewById(R.id.btn_login);
+        btn_register = findViewById(R.id.btn_register);
+        btn_google = findViewById(R.id.btn_google);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -58,6 +60,20 @@ public class LoginActivity extends AppCompatActivity {
                     logMein(email, password);
                 }
 
+            }
+        });
+        //Ir a Registrar usuarios
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
+        //Logearse con Google
+        btn_google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, GoogleActivity.class));
             }
         });
     }
