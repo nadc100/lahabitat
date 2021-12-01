@@ -43,6 +43,7 @@ public class PropertyAdapter extends FirebaseRecyclerAdapter<PropertyModel, Prop
                         propertyModel.getPrice(),
                         propertyModel.getRoom(),
                         propertyModel.getParking(),
+                        propertyModel.getDescription(),
                         propertyModel.getImageURL()
                 )).addToBackStack(null).commit();
 
