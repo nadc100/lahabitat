@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.fiap.lhabitat.R;
@@ -22,19 +23,13 @@ import org.fiap.lhabitat.ui.slideshow.SlideshowFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GeneralDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class GeneralDetailsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -58,15 +53,7 @@ public class GeneralDetailsFragment extends Fragment {
         this.imageUrl = imageUrl;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GeneralDetailsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static GeneralDetailsFragment newInstance(String param1, String param2) {
         GeneralDetailsFragment fragment = new GeneralDetailsFragment();
         Bundle args = new Bundle();
@@ -83,6 +70,8 @@ public class GeneralDetailsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -125,6 +114,9 @@ public class GeneralDetailsFragment extends Fragment {
                 goingToSlideshowFragment();
             }
         });
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapa);
+        mapFragment.getMapAsync(this);
 
         return view;
 

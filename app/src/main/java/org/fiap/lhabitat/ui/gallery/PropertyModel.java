@@ -12,6 +12,7 @@ public class PropertyModel implements Serializable {
     private String parking;
     private String description;
     public String imageURL;
+
     public PropertyModel(){}
 
     public PropertyModel(String status, String city,  String estrato, String neighborhood, String price, String room, String parking, String description, String url) {

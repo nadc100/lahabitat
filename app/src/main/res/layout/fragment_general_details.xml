@@ -214,16 +214,12 @@
             android:gravity="start|top"
             android:inputType="textMultiLine" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <Button
             android:id="@+id/fab_purchase"
-            android:layout_width="wrap_content"
+            android:layout_width="192dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center|center_horizontal"
             android:text="Comprar" />
 
     </LinearLayout>
