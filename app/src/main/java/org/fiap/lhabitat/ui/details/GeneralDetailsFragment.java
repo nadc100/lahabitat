@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,7 +40,8 @@ public class GeneralDetailsFragment extends Fragment {
 
     public static List<PropertyModel> property = new ArrayList<>();
     String status, city,  estrato, neighborhood, price, room, parking, imageUrl;
-    FloatingActionButton fab_goback, fab_purchase;
+    FloatingActionButton fab_goback;
+    Button fab_purchase;
 
     public GeneralDetailsFragment() {
         // Required empty public constructor
