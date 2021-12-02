@@ -30,6 +30,8 @@ public class Adapter extends FirebaseRecyclerAdapter<PropertyModel, org.fiap.lha
         myViewHolder.textViewciudad.setText(propertyModel.getCity());
         myViewHolder.textViewest.setText(propertyModel.getEstrato());
         myViewHolder.textViewparking.setText(propertyModel.getParking());
+        myViewHolder.textViewHabitacion.setText(propertyModel.getRoom());
+        myViewHolder.textViewneib.setText(propertyModel.getNeighborhood());
 
         Glide.with(myViewHolder.imageViewimagen.getContext()).load(propertyModel.getImageURL()).into(myViewHolder.imageViewimagen);
 
@@ -66,6 +68,8 @@ public class Adapter extends FirebaseRecyclerAdapter<PropertyModel, org.fiap.lha
         TextView textViewciudad;
         TextView textViewest;
         TextView textViewparking;
+        TextView textViewHabitacion;
+        TextView textViewneib;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +79,8 @@ public class Adapter extends FirebaseRecyclerAdapter<PropertyModel, org.fiap.lha
             textViewciudad = itemView.findViewById(R.id.textViewciudad);
             textViewest = itemView.findViewById(R.id.textViewest);
             textViewparking = itemView.findViewById(R.id.textViewparking);
+            textViewHabitacion = itemView.findViewById(R.id.textViewhab);
+            textViewneib = itemView.findViewById(R.id.textViewneib);
         }
     }
 
