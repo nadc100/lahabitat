@@ -22,7 +22,7 @@ public class PropertyFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     RecyclerView recview;
-    PropertyAdapter adapter;
+    org.fiap.lhabitat.ui.gallery.PropertyAdapter adapter;
 
     public PropertyFragment() {
 
@@ -63,7 +63,7 @@ public class PropertyFragment extends Fragment {
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("property"), PropertyModel.class)
                         .build();
 
-        adapter = new PropertyAdapter(options);
+        adapter = new org.fiap.lhabitat.ui.gallery.PropertyAdapter(options);
         recview.setAdapter(adapter);
 
         return view;

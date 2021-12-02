@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.fiap.lhabitat.R;
@@ -38,7 +37,7 @@ public class DetailsFragment extends Fragment {
     private String mParam2;
 
     public static List<PropertyModel> property = new ArrayList<>();
-    String status, city,  estrato, neighborhood, price, room, parking, imageUrl;
+    String status, city,  estrato, neighborhood, price, room, parking, description, imageUrl;
     FloatingActionButton fab_goback;
     FloatingActionButton fab_galleryFragment;
     FloatingActionButton fab_remove;
@@ -47,7 +46,7 @@ public class DetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public DetailsFragment(String status, String city,  String estrato, String neighborhood, String price, String room, String parking, String imageUrl) {
+    public DetailsFragment(String status, String city,  String estrato, String neighborhood, String price, String room, String parking, String description, String imageUrl) {
         this.status = status;
         this.city = city;
         this.estrato = estrato;
@@ -55,6 +54,7 @@ public class DetailsFragment extends Fragment {
         this.price = price;
         this.room = room;
         this.parking = parking;
+        this.description = description;
         this.imageUrl = imageUrl;
     }
 
@@ -104,7 +104,7 @@ public class DetailsFragment extends Fragment {
         TextView detailsPrice = view.findViewById(R.id.details_price);
         TextView detailsRooms = view.findViewById(R.id.details_rooms);
         TextView detailsParking = view.findViewById(R.id.details_parking);
-        Glide.with(getContext()).load(imageUrl).into(detailsImage);
+        TextView detailsDescription = view.findViewById(R.id.details_description);
 
         detailsStatus.setText(status);
         detailsCity.setText(city);
@@ -113,6 +113,7 @@ public class DetailsFragment extends Fragment {
         detailsPrice.setText(price);
         detailsRooms.setText(room);
         detailsParking.setText(parking);
+        detailsParking.setText(description);
 
         fab_goback.setOnClickListener(new View.OnClickListener() {
             @Override

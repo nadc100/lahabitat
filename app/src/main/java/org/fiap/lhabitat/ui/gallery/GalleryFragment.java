@@ -63,7 +63,7 @@ public class GalleryFragment extends Fragment {
     private static final int GALLERY_INTENT = 111;
 
     private AutoCompleteTextView status, city, estrato, room, parking;
-    EditText neighborhood, price;
+    EditText neighborhood, price, description;
     Button btnRegister;
 
     StorageReference mStorage, ref;
@@ -77,8 +77,8 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        Property = FirebaseDatabase.getInstance().getReference();
-        mStorage = FirebaseStorage.getInstance().getReference();
+        Property = FirebaseDatabase.getInstance().getReference("property");
+        mStorage = FirebaseStorage.getInstance().getReference("property");
         progressDialog = new ProgressDialog(getActivity());
 
         galleryViewModel =
@@ -149,6 +149,7 @@ public class GalleryFragment extends Fragment {
 
         neighborhood = root.findViewById(R.id.editTextNeighborhood);
         price = root.findViewById(R.id.editTextprice);
+        description = root.findViewById(R.id.et_description);
         btnRegister = root.findViewById(R.id.btnRegister);
         galleryFragmentCardView = root.findViewById(R.id.card_information);
 
@@ -283,10 +284,11 @@ public class GalleryFragment extends Fragment {
                                     String tempPrice = price.getText().toString().trim();
                                     String tempRoom = room.getText().toString().trim();
                                     String tempParking = parking.getText().toString().trim();
+                                    String tempDescription = description.getText().toString().trim();
                                     progressDialog.dismiss();
                                     Toast.makeText(getActivity().getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                                     @SuppressWarnings("VisibleForTests")
-                                    PropertyModel imageUploadInfo = new PropertyModel(tempStatus, tempCity, tempEstrato, tempNeighborhood, tempPrice, tempRoom, tempParking, uri.toString());
+                                    PropertyModel imageUploadInfo = new PropertyModel(tempStatus, tempCity, tempEstrato, tempNeighborhood, tempPrice, tempRoom, tempParking, tempDescription, uri.toString());
                                     String ImageUploadId = Property.push().getKey();
                                     Property.child(ImageUploadId).setValue(imageUploadInfo);
 

@@ -10,10 +10,11 @@ public class PropertyModel implements Serializable {
     private String price;
     private String room;
     private String parking;
+    private String description;
     public String imageURL;
     public PropertyModel(){}
 
-    public PropertyModel(String status, String city,  String estrato, String neighborhood, String price, String room, String parking, String url) {
+    public PropertyModel(String status, String city,  String estrato, String neighborhood, String price, String room, String parking, String description, String url) {
         this.status = status;
         this.city = city;
         this.estrato = estrato;
@@ -21,6 +22,7 @@ public class PropertyModel implements Serializable {
         this.price = price;
         this.room = room;
         this.parking = parking;
+        this.description = description;
         this.imageURL = url;
     }
 
@@ -44,6 +46,9 @@ public class PropertyModel implements Serializable {
     }
     public String getParking() {
         return parking;
+    }
+    public String getDescription() {
+        return description;
     }
     public String getImageURL() {
         return imageURL;
