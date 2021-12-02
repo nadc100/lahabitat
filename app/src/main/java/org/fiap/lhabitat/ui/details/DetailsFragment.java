@@ -98,10 +98,10 @@ public class DetailsFragment extends Fragment {
 
         ImageView detailsImage = view.findViewById(R.id.details_image);
         TextView detailsStatus = view.findViewById(R.id.details_status);
-        TextView detailsCity = view.findViewById(R.id.details_city);
+        TextView detailsCity = view.findViewById(R.id.general_details_city);
         TextView detailsEstrato = view.findViewById(R.id.details_estrato);
-        TextView detailsNeighborhood = view.findViewById(R.id.details_neighborhood);
-        TextView detailsPrice = view.findViewById(R.id.details_price);
+        TextView detailsNeighborhood = view.findViewById(R.id.general_details_neighborhood);
+        TextView detailsPrice = view.findViewById(R.id.general_details_price);
         TextView detailsRooms = view.findViewById(R.id.details_rooms);
         TextView detailsParking = view.findViewById(R.id.details_parking);
         TextView detailsDescription = view.findViewById(R.id.details_description);

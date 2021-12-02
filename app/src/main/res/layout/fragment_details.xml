@@ -83,7 +83,7 @@
                 android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/details_city"
+                android:id="@+id/general_details_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="130dp"
@@ -131,7 +131,7 @@
                 android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/details_neighborhood"
+                android:id="@+id/general_details_neighborhood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="130dp"
@@ -155,7 +155,7 @@
                 android:textSize="17sp" />
 
             <TextView
-                android:id="@+id/details_price"
+                android:id="@+id/general_details_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="130dp"
