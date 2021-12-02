@@ -1,92 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/buttonDetails"
+    android:id="@+id/id_relative"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/imageViewimagen"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="15dp"
-        android:textAlignment="center"
-        app:srcCompat="@drawable/ic_home_ofiice" />
-
-    <ImageView
-        android:id="@+id/imageViewprecio"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_below="@id/imageViewimagen"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="15dp"
-        app:srcCompat="@drawable/ic_price" />
-
-    <TextView
-        android:id="@+id/textViewprecio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewimagen"
-        android:layout_toEndOf="@id/imageViewprecio"
-        android:text="PRECIO"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/esquinas_redondeadas">
 
     <ImageView
         android:id="@+id/imageViewciudad"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_below="@id/imageViewimagen"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="15dp"
+        android:layout_centerHorizontal="false"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
         app:srcCompat="@drawable/mapa" />
 
     <TextView
         android:id="@+id/textViewciudad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewimagen"
         android:layout_toEndOf="@id/imageViewciudad"
         android:text="CIUDAD"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/imageViewest"
+        android:id="@+id/imageViewFavorite"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_below="@id/imageViewprecio"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="20dp"
-        app:srcCompat="@drawable/ic_estrato" />
-
-    <TextView
-        android:id="@+id/textViewest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewprecio"
-        android:layout_toEndOf="@id/imageViewest"
-        android:text="ESTRATO"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        app:srcCompat="@drawable/ic_favorite"
+        android:tint="@color/main_green"/>
 
     <ImageView
-        android:id="@+id/imageViewparking"
+        android:id="@+id/imageViewprecio"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_below="@id/imageViewprecio"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="15dp"
-        app:srcCompat="@drawable/ic_parking" />
+        android:layout_below="@id/imageViewciudad"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@id/textViewprecio"
+        app:srcCompat="@drawable/ic_price" />
 
     <TextView
-        android:id="@+id/textViewparking"
+        android:id="@+id/textViewprecio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewprecio"
-        android:layout_toEndOf="@id/imageViewparking"
-        android:text="PARQUEADEROS"
+        android:layout_below="@id/imageViewciudad"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:text="PRECIO"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewneib"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewciudad"
+        android:layout_marginLeft="5dp"
+        android:text="BARRIO"
+        android:textSize="20sp"
+        android:textStyle="italic" />
+
+    <ImageView
+        android:id="@+id/imageViewimagen"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/textViewneib"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:textAlignment="center"
+        app:srcCompat="@drawable/ic_home_ofiice" />
+
+    <LinearLayout
+        android:id="@+id/id_caracteristicas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewimagen"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageViewest"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="5dp"
+            app:srcCompat="@drawable/ic_estrato"
+            android:tint="@color/main_green" />
+
+        <TextView
+            android:id="@+id/textViewest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:text="ESTRATO"
+            android:textSize="20sp"
+            android:textStyle="italic" />
+
+        <ImageView
+            android:id="@+id/imageViewhab"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            app:srcCompat="@drawable/ic_bed"
+            android:tint="@color/main_green" />
+
+        <TextView
+            android:id="@+id/textViewhab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:text="HABITA"
+            android:textSize="20sp"
+            android:textStyle="italic" />
+
+        <ImageView
+            android:id="@+id/imageViewparking"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            app:srcCompat="@drawable/ic_parking"
+            android:tint="@color/main_green" />
+
+        <TextView
+            android:id="@+id/textViewparking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:text="PARQUEADEROS"
+            android:textSize="20sp"
+            android:textStyle="italic" />
+    </LinearLayout>
 
 </RelativeLayout>

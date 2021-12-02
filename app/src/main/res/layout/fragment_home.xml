@@ -5,9 +5,9 @@
     android:id="@+id/fr_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
-    tools:context=".ui.home.HomeFragment"
-    android:background="@color/white">
+    android:padding="5dp"
+    android:background="@drawable/gradient_background"
+    tools:context=".ui.home.HomeFragment">
 
 
     <TextView
