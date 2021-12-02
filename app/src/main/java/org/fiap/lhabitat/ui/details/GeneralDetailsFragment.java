@@ -82,7 +82,7 @@ public class GeneralDetailsFragment extends Fragment {
         fab_goback = view.findViewById(R.id.general_details_fab_goback);
         fab_purchase = view.findViewById(R.id.fab_purchase);
 
-        ImageView detailsImage = view.findViewById(R.id.imageviewimage);
+        ImageView detailsImage = view.findViewById(R.id.general_details_image);
         TextView detailsStatus = view.findViewById(R.id.general_details_status);
         TextView detailsCity = view.findViewById(R.id.general_details_city);
         TextView detailsEstrato = view.findViewById(R.id.general_details_estrato);

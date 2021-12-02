@@ -16,9 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="17dp"
         android:layout_marginEnd="339dp"
-        android:layout_marginBottom="232dp"
+        android:background="#00FFFFFF"
         app:backgroundTint="#FBFBFB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,18 +39,22 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:fontFamily="sans-serif-black"
                 android:text="Propiedad"
+                android:textAlignment="center"
                 android:textColor="@color/second_green"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="76dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:elevation="5dp"
             android:padding="15dp">
 
@@ -110,10 +113,14 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/imageviewimage"
+                    android:id="@+id/general_details_image"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:src="@tools:sample/avatars" />
+                    android:layout_height="222dp"
+                    android:src="@drawable/ic_home_ofiice"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
