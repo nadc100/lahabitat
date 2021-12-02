@@ -214,13 +214,14 @@
             android:gravity="start|top"
             android:inputType="textMultiLine" />
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_purchase"
-            android:layout_width="192dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center|center_horizontal"
-            android:text="Comprar" />
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="25dp"
+            app:backgroundTint="#FBFBFB"
+            app:srcCompat="@drawable/ic_purchase" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,8 +35,7 @@ public class GeneralDetailsFragment extends Fragment {
 
     public static List<PropertyModel> property = new ArrayList<>();
     String status, city,  estrato, neighborhood, price, room, parking, imageUrl;
-    FloatingActionButton fab_goback;
-    Button fab_purchase;
+    FloatingActionButton fab_goback, fab_purchase;
 
     public GeneralDetailsFragment() {
         // Required empty public constructor
