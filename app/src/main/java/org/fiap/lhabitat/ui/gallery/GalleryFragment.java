@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -50,12 +49,11 @@ import java.io.IOException;
 
 public class GalleryFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
+    GalleryViewModel galleryViewModel;
     private FragmentGalleryBinding binding;
 
-    public static final String EXTRA_INFO = "default";
-    private ImageView captureBtn;
-    private ImageView uploadBtn;
+    ImageView captureBtn;
+    ImageView uploadBtn;
     private ImageView picture;
 
     private static final int REQUEST_PERMISSION_CAMERA = 100;
@@ -66,10 +64,9 @@ public class GalleryFragment extends Fragment {
     EditText neighborhood, price, description;
     Button btnRegister;
 
-    StorageReference mStorage, ref;
+    StorageReference mStorage;
     DatabaseReference Property;
     Uri filePath;
-    String downloadUrl;
     ProgressDialog progressDialog;
     CardView galleryFragmentCardView;
 
@@ -93,15 +90,11 @@ public class GalleryFragment extends Fragment {
         captureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
-                        goToCamera();
-                        Toast.makeText(getActivity(), "going to Camera", Toast.LENGTH_LONG).show();
-                    }else{
-                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},REQUEST_PERMISSION_CAMERA);
-                    }
-                }else{
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
                     goToCamera();
+                    Toast.makeText(getActivity(), "going to Camera", Toast.LENGTH_LONG).show();
+                }else{
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},REQUEST_PERMISSION_CAMERA);
                 }
             }
         });
