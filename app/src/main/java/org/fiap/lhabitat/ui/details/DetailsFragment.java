@@ -113,7 +113,7 @@ public class DetailsFragment extends Fragment {
         detailsPrice.setText(price);
         detailsRooms.setText(room);
         detailsParking.setText(parking);
-        detailsParking.setText(description);
+        detailsDescription.setText(description);
 
         fab_goback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +153,10 @@ public class DetailsFragment extends Fragment {
         transaction.replace(R.id.gallery_frame, galleryFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void delete(){
+
     }
 
 }
