@@ -77,8 +77,8 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        Property = FirebaseDatabase.getInstance().getReference();
-        mStorage = FirebaseStorage.getInstance().getReference();
+        Property = FirebaseDatabase.getInstance().getReference("property");
+        mStorage = FirebaseStorage.getInstance().getReference("property");
         progressDialog = new ProgressDialog(getActivity());
 
         galleryViewModel =
