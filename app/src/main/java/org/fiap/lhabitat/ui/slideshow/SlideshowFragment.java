@@ -22,7 +22,7 @@ public class SlideshowFragment extends Fragment {
     private FragmentSlideshowBinding binding;
 
     //    private Button _btn_link;
-    String _url = "https://walink.co/e42deb";
+    String _url = "https://api.whatsapp.com/send/?phone=573225365832&text=Hola+quiero+obtener+mas+informaci%C3%B3n+de+una+propiedad!";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
